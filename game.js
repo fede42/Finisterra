@@ -12,8 +12,15 @@ window.onload = function(){
 		delete key[e.keyCode];
 	});
 	
-	//sprite atlas
-	img = document.getElementById("logoviejo");
+	//sprites
+	imgBackground = new Image();
+	imgBackground.src = "nuevo.jpg"
+	imgBricksAtlas = new Image();
+	imgBricksAtlas.src = "viejo.jpg"
+	imgPaddle = new Image();
+	imgPaddle.src = "paddle.jpg";
+	imgBall = new Image();
+	imgBall.src = "ball.png";
 	
 	//keycodes
 	RIGHT = 39;
@@ -47,7 +54,7 @@ window.onload = function(){
 				},
 				render: function(){
 					if(!this.broken){
-						c.drawImage(img,this.x,this.y,this.tileWidth,this.tileHeight,this.x,this.y,this.tileWidth,this.tileHeight);
+						c.drawImage(imgBricksAtlas,this.x,this.y,this.tileWidth,this.tileHeight,this.x,this.y,this.tileWidth,this.tileHeight);
 					}
 				}
 			}
@@ -69,15 +76,14 @@ window.onload = function(){
 			}
 		},
 		render: function(){
-			c.fillStyle = "green";
-			c.strokeRect(this.x, this.y, this.w, this.h);
-			c.fillRect(this.x,this.y,this.w,this.h);
+			c.drawImage(imgPaddle,this.x,this.y,this.w,this.h)
 		}
 	}
 	
 	ball = {
 		x: player.x + 32,
 		y: player.y - 10,
+		size: 16,
 		radius: 8,
 		vx: 2,
 		vy: -2,
@@ -119,11 +125,7 @@ window.onload = function(){
 			}
 		},
 		render: function(){
-			c.fillStyle = "red";
-			c.beginPath();
-				c.arc(this.x, this.y, this.radius, 0,Math.PI*2);
-			c.fill();
-			c.stroke();
+			c.drawImage(imgBall,this.x-this.radius,this.y-this.radius,this.size,this.size);
 		}
 	}
 	
@@ -138,12 +140,7 @@ window.onload = function(){
 	}
 	
 	function render(){
-		//c.fillStyle = "blue";
-		var img = document.getElementById("logonuevo");
-		var pat = c.createPattern(img,"no-repeat");
-		c.fillStyle = pat;
-		c.fillRect(0,0,width,height);
-		c.fillStyle = "black";
+		c.drawImage(imgBackground,0,0,width,height);
 		
 		player.render();
 		ball.render();
